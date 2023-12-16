@@ -1,40 +1,34 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
+import java.util.Set;
 
-// To represent database table ++++++++++++
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "admin")
-// for getters and setters ---
-
+@AllArgsConstructor
 @Data
-public class User {
+@EqualsAndHashCode(exclude = "userList")
+public class Admin {
     @Id
     private int id;
     private String name;
     private String address;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
     @JsonIgnore
-    private Admin admin;
+    private Set<User> userList;
 
-    public User(int id, String name, String address) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-    }
-
-    //    @Override
+//    @Override
 //    public int hashCode() {
 //        return Objects.hash(id, name, address);
 //    }
@@ -43,8 +37,7 @@ public class User {
 //    public boolean equals(Object obj) {
 //        if (this == obj) return true;
 //        if (obj == null || getClass() != obj.getClass()) return false;
-//        User user = (User) obj;
-//        return id == user.id && Objects.equals(name, user.name) && Objects.equals(address, user.address);
+//        Admin admin = (Admin) obj;
+//        return id == admin.id && Objects.equals(name, admin.name) && Objects.equals(address, admin.address);
 //    }
-
 }
