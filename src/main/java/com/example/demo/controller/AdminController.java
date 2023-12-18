@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AdminDto;
 import com.example.demo.dto.AdminWithUsersRequest;
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.UserRequest;
@@ -19,6 +20,9 @@ import java.util.Set;
 @CrossOrigin
 public class AdminController {
 
+    @Autowired
+    private AdminService adminService;
+
     @GetMapping(value = "/getAdmins")
     public String getUser(){
         return "Hello Admin Controller ----";
@@ -29,10 +33,10 @@ public class AdminController {
 //
 //    }
 //
-//    @PostMapping(value = "/saveAdmin")
-//    public UserDto saveUser(@RequestBody UserDto userDto){
-//
-//    }
+    @PostMapping(value = "/saveAdmin")
+    public AdminDto saveUser(@RequestBody AdminDto adminDto){
+        return adminService.saveAdmin(adminDto);
+    }
 //
 //    @PutMapping(value = "/updateAdmin")
 //    public UserDto updateUser(@RequestBody UserDto userDto){
@@ -44,8 +48,7 @@ public class AdminController {
 //
 //    }
 
-    @Autowired
-    private AdminService adminService;
+
 
     @PostMapping("/add")
     public void addAdminWithUsers(@RequestBody AdminWithUsersRequest request) {

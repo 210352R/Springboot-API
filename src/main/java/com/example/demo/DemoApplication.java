@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.entity.Admin;
 import com.example.demo.entity.User;
 import com.example.demo.service.AdminService;
+import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,14 +21,6 @@ public class DemoApplication {
 
 	}
 
-
-    @Bean
-	public CommandLineRunner myCommandLineRunner(AdminService adminService) {
-		return args -> {
-			User user = new User(75,"Horana","Ranil");
-			adminService.addUser(user , 2);
-		};
-	}
 	@Bean
 	public ModelMapper modelMapper(){
 		return  new ModelMapper();

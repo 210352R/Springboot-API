@@ -2,10 +2,11 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.AdminDto;
-import com.example.demo.dto.UserDto;
 import com.example.demo.entity.Admin;
+import com.example.demo.entity.Note;
 import com.example.demo.entity.User;
 import com.example.demo.repo.AdminRepo;
+import com.example.demo.repo.NoteRepo;
 import com.example.demo.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -22,6 +22,9 @@ import java.util.Set;
 public class AdminService {
     @Autowired
     private AdminRepo adminRepo;
+
+    @Autowired
+    private NoteRepo noteRepo;
 
     @Autowired
     private UserRepo userRepo;
@@ -64,6 +67,7 @@ public class AdminService {
         // Set the user list for the admin and update
         admin.setUserList(users);
         adminRepo.save(admin);
+//        Note note = noteRepo.save(new Note(admin,"Added Note - "+admin.getId()));
     }
 
     public void addUser(User user , int admin_id){
@@ -87,6 +91,9 @@ public class AdminService {
 //
 //        }
     }
+
+
+
 
 
 
