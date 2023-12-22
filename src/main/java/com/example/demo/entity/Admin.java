@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
-import com.example.demo.eventListners.AdminListner;
+
+import com.example.demo.service.AdminService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Set;
 
 @Entity
-@EntityListeners(AdminListner.class)
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(exclude = "userList")
+@EqualsAndHashCode(exclude = {"userList", "activityLogsList"})
 public class Admin {
     @Id
     private int id;
@@ -27,9 +28,9 @@ public class Admin {
     @JsonIgnore
     private Note note;
 
-
-
-
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<ActivityLog> activityLogsList;
 
 
     public Admin(int id, String name, String address, Set<User> userList) {
