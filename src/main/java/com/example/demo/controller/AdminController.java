@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AdminDto;
-import com.example.demo.dto.AdminWithUsersRequest;
-import com.example.demo.dto.UserDto;
-import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Admin;
 import com.example.demo.entity.User;
 import com.example.demo.service.AdminService;
@@ -72,6 +69,8 @@ public class AdminController {
         // Call the service method to add admin with users
         adminService.addAdminWithUsers(admin, users);
     }
+
+
 
 
 }

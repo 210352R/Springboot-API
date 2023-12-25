@@ -51,5 +51,11 @@ public class Withdrowal {
     @JsonIgnore
     private ActivityLog activityLog;
 
+    public Withdrowal(User user, LocalDateTime setDate, BigDecimal total_amount,  String status) {
+        this.user = user;
+        this.setDate = setDate;
+        this.total_amount = total_amount;
+        this.status = status;
+    }
 
 }

@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.UserDto;
+import com.example.demo.dto.WithdrowalRequestDto;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserAccount;
+import com.example.demo.entity.Withdrowal;
 import com.example.demo.repo.UserAccountRepo;
 import com.example.demo.repo.UserRepo;
+import com.example.demo.repo.WithdrowalRepo;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -28,6 +31,9 @@ public class UserService {
 
     @Autowired
     private UserAccountRepo userAccountRepo;
+
+    @Autowired
+    private WithdrowalRepo withdrowalRepo;
     @Autowired
     private ModelMapper modelMapper;
     @Transactional
@@ -84,5 +90,16 @@ public class UserService {
 //            userAccountRepo.save(account);
 //        });
 
+    }
+    @Transactional
+    public Withdrowal makeWithdrowal(WithdrowalRequestDto withdrowalRequestDto){
+        int userId  = withdrowalRequestDto.getUserId();
+        BigDecimal total_amount = withdrowalRequestDto.getTotal_amount();
+        User user = userRepo.getUserById(userId);
+        LocalDateTime curr_dateTime = LocalDateTime.now();
+        Withdrowal withdrowal = new Withdrowal(user,curr_dateTime,total_amount,"pending");
+        Withdrowal savedWithdrowal =  withdrowalRepo.save(withdrowal);
+        System.out.println("Method eka run una +---- ");
+        return withdrowal;
     }
 }

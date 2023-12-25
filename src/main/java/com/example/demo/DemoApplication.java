@@ -2,11 +2,14 @@ package com.example.demo;
 
 import com.example.demo.entity.Admin;
 import com.example.demo.entity.User;
+import com.example.demo.entity.Withdrowal;
 import com.example.demo.eventListners.UserListner;
 import com.example.demo.repo.UserAccountRepo;
 import com.example.demo.service.AdminService;
+import com.example.demo.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,4 +45,17 @@ public class DemoApplication {
 //		userListner.setUserAccountRepo(userAccountRepo);
 //		return userListner;
 //	}
+
+
+
+//	@Bean
+//	public CommandLineRunner commandLineRunner() {
+//		// You can call the method from the autowired service here
+//
+//		userService.getUserByID();
+//
+//		return args -> userService.makeWithdrowal();
+//	}
+
+
 }

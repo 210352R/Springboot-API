@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.UserDto;
+import com.example.demo.dto.WithdrowalRequestDto;
+import com.example.demo.entity.Withdrowal;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +40,11 @@ public class UserController {
     @DeleteMapping(value = "/deleteUser")
     public boolean deleteUser(@RequestParam int userId){
         return userService.deleteUserById(userId);
+    }
+
+    @PostMapping("/setWithdrowal")
+    public Withdrowal doWithdrowal(@RequestBody WithdrowalRequestDto withdrowalRequestDto){
+        System.out.println("Call Set withdrowal service method ------------ ");
+        return userService.makeWithdrowal(withdrowalRequestDto);
     }
 }
