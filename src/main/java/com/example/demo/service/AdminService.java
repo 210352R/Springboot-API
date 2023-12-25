@@ -1,19 +1,17 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.ActivityLogRequestDto;
 import com.example.demo.dto.AdminDto;
-import com.example.demo.entity.Admin;
-import com.example.demo.entity.Note;
-import com.example.demo.entity.User;
-import com.example.demo.repo.AdminRepo;
-import com.example.demo.repo.NoteRepo;
-import com.example.demo.repo.UserRepo;
+import com.example.demo.entity.*;
+import com.example.demo.repo.*;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +26,13 @@ public class AdminService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private WithdrowalRepo withdrowalRepo;
+
+    @Autowired
+    private ActivityLogRepo activityLogRepo;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -93,8 +98,30 @@ public class AdminService {
     }
 
 
-    public void addActivityLog(){
+    @Transactional
+    public ActivityLog addActivityLog(ActivityLogRequestDto activityLogRequestDto){
+        int adminId = activityLogRequestDto.getAdminId();
+        Long trans_id = activityLogRequestDto.getTrans_id();
+        String state = activityLogRequestDto.getState();
+        String comment = activityLogRequestDto.getComment();
+        LocalDateTime curr_dateTime = LocalDateTime.now();
 
+        System.out.println("-------------*** Admin ID = "+adminId);
+        Admin admin = adminRepo.findById(adminId).orElseThrow();
+        Withdrowal withdrowal = withdrowalRepo.findById(trans_id).orElseThrow();
+        ActivityLog activityLog = new ActivityLog(admin,withdrowal,curr_dateTime , state ,comment);
+        ActivityLog savedActivityLog = activityLogRepo.save(activityLog);
+
+        // update transaction (Withdrowal)
+        if(savedActivityLog.getState().equalsIgnoreCase("Ok")){
+            withdrowal.setActivityLog(savedActivityLog);
+            withdrowal.setGetDate(savedActivityLog.getDate());
+            withdrowal.setStatus("Active");
+        }
+        else{
+            System.out.println("There is Failed Activity Log");
+        }
+        return savedActivityLog;
     }
 
 

@@ -39,4 +39,12 @@ public class ActivityLog {
 
 //    @Column(length = 255)
     private String comment;
+
+    public ActivityLog(Admin admin, Withdrowal withdrowal, LocalDateTime date, String state, String comment) {
+        this.admin = admin;
+        this.withdrowal = withdrowal;
+        this.Date = date;
+        this.state = state;
+        this.comment = comment;
+    }
 }

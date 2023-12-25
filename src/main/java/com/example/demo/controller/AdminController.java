@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.*;
+import com.example.demo.entity.ActivityLog;
 import com.example.demo.entity.Admin;
 import com.example.demo.entity.User;
 import com.example.demo.service.AdminService;
@@ -70,7 +71,8 @@ public class AdminController {
         adminService.addAdminWithUsers(admin, users);
     }
 
-
-
-
+    @PostMapping("/addActivityLog")
+    public ActivityLog addActivityLog(@RequestBody  ActivityLogRequestDto activityLogRequestDto){
+        return adminService.addActivityLog(activityLogRequestDto);
+    }
 }
